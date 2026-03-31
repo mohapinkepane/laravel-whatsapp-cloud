@@ -246,7 +246,7 @@ it('can be extended so applications handle inbound messages directly in a custom
         StatusUpdated::class,
     ]);
 
-    $controller = new class(resolve(WhatsAppConfig::class), resolve(WebhookSignatureValidator::class), resolve(WebhookRequestParser::class), app('events')) extends BaseWhatsAppWebhookController
+    $controller = new class(resolve(WhatsAppConfig::class), resolve(WebhookSignatureValidator::class), resolve(WebhookRequestParser::class), resolve('events')) extends BaseWhatsAppWebhookController
     {
         /**
          * @var array<int, string>

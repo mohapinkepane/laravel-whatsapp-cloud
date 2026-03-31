@@ -152,7 +152,7 @@ final class PendingSendResponse extends Response
         return parent::offsetGet($offset);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         $this->dispatchIfNeeded();
 
@@ -178,6 +178,7 @@ final class PendingSendResponse extends Response
         $response = ($this->dispatch)($this->message);
 
         $this->response = $response->toPsrResponse();
+
         $this->cookies = $response->cookies;
         $this->transferStats = $response->transferStats;
         $this->sent = true;

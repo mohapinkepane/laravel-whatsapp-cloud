@@ -8,7 +8,7 @@ use Mohapinkepane\WhatsAppCloud\Config\WhatsAppConfig;
 use Mohapinkepane\WhatsAppCloud\Inbound\IncomingMessage;
 use Mohapinkepane\WhatsAppCloud\Inbound\IncomingUser;
 
-final class WebhookRequestParser
+final readonly class WebhookRequestParser
 {
     public function __construct(private ?WhatsAppConfig $config = null) {}
 
@@ -114,7 +114,7 @@ final class WebhookRequestParser
      */
     private function shouldProcessValue(array $value): bool
     {
-        if ($this->config === null || ! $this->config->restrictInboundMessagesToPhoneNumberId()) {
+        if (! $this->config instanceof WhatsAppConfig || ! $this->config->restrictInboundMessagesToPhoneNumberId()) {
             return true;
         }
 

@@ -46,7 +46,7 @@ function realWhatsAppConfig(): RealWhatsAppTestConfig
 
 function realWhatsAppClient(): WhatsAppClient
 {
-    return app(WhatsAppClient::class);
+    return resolve(WhatsAppClient::class);
 }
 
 function ensureRealWhatsAppPreflight(TestCase $test): void
@@ -328,7 +328,7 @@ it('sends commerce messages when catalog coverage is configured', function (): v
         $productList = $productList->addSection(ProductSection::create(
             'Section '.($index + 1),
             array_map(
-                static fn (string $retailerId): ProductItem => ProductItem::create($retailerId),
+                ProductItem::create(...),
                 $sectionRetailerIds,
             ),
         ));

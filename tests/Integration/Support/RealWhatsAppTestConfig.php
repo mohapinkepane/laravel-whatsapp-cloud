@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Mohapinkepane\WhatsAppCloud\Tests\Integration\Support;
 
+use Illuminate\Support\Env;
+use Illuminate\Support\Facades\Request;
 use PHPUnit\Framework\TestCase;
 
 final class RealWhatsAppTestConfig
@@ -261,10 +263,10 @@ final class RealWhatsAppTestConfig
 
     private function string(string $key): ?string
     {
-        $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
+        $value = Env::get($key, Request::server($key) ?? getenv($key));
 
         if (! is_string($value)) {
-            $value = self::fileValues()[$key] ?? null;
+            $value = $this->fileValues()[$key] ?? null;
         }
 
         if (! is_string($value)) {
@@ -279,7 +281,7 @@ final class RealWhatsAppTestConfig
     /**
      * @return array<string, string>
      */
-    private static function fileValues(): array
+    private function fileValues(): array
     {
         if (self::$fileValues !== null) {
             return self::$fileValues;
@@ -355,7 +357,7 @@ final class RealWhatsAppTestConfig
         }
 
         return array_values(array_filter(array_map(
-            static fn (string $item): string => trim($item),
+            trim(...),
             explode($separator, $value),
         ), static fn (string $item): bool => $item !== ''));
     }
