@@ -1,0 +1,46 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: [8.2, 8.3]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Run tests
+        run: composer test
+
+      - name: Run static analysis
+        run: composer analyse
+
+      - name: Check formatting
+        run: vendor/bin/pint --test
+
+      - name: Run Rector
+        run: composer refactor -- --dry-run

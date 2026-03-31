@@ -1,0 +1,66 @@
+{
+    "name": "mohapinkepane/laravel-whatsapp-cloud",
+    "description": "Laravel-first WhatsApp Cloud API wrapper with fluent builders, webhook support, flows, and notifications.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "whatsapp",
+        "whatsapp-cloud-api",
+        "notifications",
+        "meta"
+    ],
+    "require": {
+        "php": "^8.2",
+        "phpseclib/phpseclib": "^3.0",
+        "illuminate/contracts": "^11.0|^12.0",
+        "illuminate/http": "^11.0|^12.0",
+        "illuminate/notifications": "^11.0|^12.0",
+        "illuminate/support": "^11.0|^12.0",
+        "spatie/laravel-package-tools": "^1.19"
+    },
+    "require-dev": {
+        "driftingly/rector-laravel": "^2.0",
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.21",
+        "orchestra/testbench": "^9.0|^10.0",
+        "pestphp/pest": "^3.7",
+        "pestphp/pest-plugin-laravel": "^3.1",
+        "phpstan/phpstan": "^2.1",
+        "rector/rector": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mohapinkepane\\WhatsAppCloud\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mohapinkepane\\WhatsAppCloud\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "WhatsAppCloud": "Mohapinkepane\\WhatsAppCloud\\Facades\\WhatsAppCloud"
+            },
+            "providers": [
+                "Mohapinkepane\\WhatsAppCloud\\WhatsAppCloudServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest --testsuite=default",
+        "integration-test": "vendor/bin/pest --testsuite=integration",
+        "analyse": "vendor/bin/phpstan analyse --memory-limit=1G",
+        "format": "vendor/bin/pint",
+        "refactor": "vendor/bin/rector process"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
